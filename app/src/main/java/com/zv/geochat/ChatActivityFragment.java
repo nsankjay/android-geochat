@@ -66,6 +66,16 @@ public class ChatActivityFragment extends Fragment {
             }
         });
 
+        Button btnSendConnectError = (Button) v.findViewById(R.id.btnSendConnectError); //Assignment 1 send connect error
+        btnSendConnectError.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "There has been an error", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                simulateSendError();
+            }
+        });
+
         edtMessage = (EditText) v.findViewById(R.id.edtMessage);
 
         loadUserNameFromPreferences();
@@ -111,5 +121,24 @@ public class ChatActivityFragment extends Fragment {
         intent.putExtras(data);
         getActivity().startService(intent);
     }
+
+    private void simulateSendError() { //Assignment 1 send connect error
+        Bundle data = new Bundle();
+        data.putInt(ChatService.MSG_CMD, ChatService.CMD_CONNECT_ERROR_00);
+        Intent intent = new Intent(getContext(), ChatService.class);
+        intent.putExtras(data);
+        getActivity().startService(intent);
+    }
+
+//    private void simulateRandomID() {
+//        Bundle data = new Bundle();
+//        data.putInt(ChatService.MSG_CMD, ChatService.CMD_RANDOM_ID);
+//        data.putString(ChatService.MSG_CMD, ChatService.function or id random);
+//        Intent intent = new Intent(getContext(), ChatService.class);
+//        intent.putExtras(data);
+//        getActivity().startService(intent);
+//    }
+
+
 
 }
