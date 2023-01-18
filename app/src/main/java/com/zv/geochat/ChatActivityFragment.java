@@ -14,6 +14,9 @@ import android.widget.EditText;
 
 import com.zv.geochat.service.ChatService;
 
+import java.util.Random;
+import java.util.UUID;
+
 public class ChatActivityFragment extends Fragment {
     private static final String TAG = "ChatActivityFragment";
     EditText edtMessage;
@@ -76,6 +79,16 @@ public class ChatActivityFragment extends Fragment {
             }
         });
 
+        Button btnSendRandomID = (Button) v.findViewById(R.id.btnSendRandomID); //Assignment 1 send connect error
+        btnSendRandomID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Sending Random ID...", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                simulateRandomID();
+            }
+        });
+
         edtMessage = (EditText) v.findViewById(R.id.edtMessage);
 
         loadUserNameFromPreferences();
@@ -130,15 +143,14 @@ public class ChatActivityFragment extends Fragment {
         getActivity().startService(intent);
     }
 
-//    private void simulateRandomID() {
-//        Bundle data = new Bundle();
-//        data.putInt(ChatService.MSG_CMD, ChatService.CMD_RANDOM_ID);
-//        data.putString(ChatService.MSG_CMD, ChatService.function or id random);
-//        Intent intent = new Intent(getContext(), ChatService.class);
-//        intent.putExtras(data);
-//        getActivity().startService(intent);
-//    }
-
-
+    private void simulateRandomID() { //Assignment 1 send Random ID
+        Bundle data = new Bundle();
+        UUID generateRandom = UUID.randomUUID();
+        data.putInt(ChatService.MSG_CMD, ChatService.CMD_SEND_RANDOM_ID);
+        data.putString(ChatService.KEY_MESSAGE_TEXT, generateRandom.toString());
+        Intent intent = new Intent(getContext(), ChatService.class);
+        intent.putExtras(data);
+        getActivity().startService(intent);
+    }
 
 }
