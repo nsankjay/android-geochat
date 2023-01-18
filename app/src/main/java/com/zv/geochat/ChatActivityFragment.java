@@ -145,12 +145,20 @@ public class ChatActivityFragment extends Fragment {
 
     private void simulateRandomID() { //Assignment 1 send Random ID
         Bundle data = new Bundle();
-        UUID generateRandom = UUID.randomUUID();
+        Random random = new Random();
+        String randomID = String.format("%7d", random.nextInt(1000000));
         data.putInt(ChatService.MSG_CMD, ChatService.CMD_SEND_RANDOM_ID);
-        data.putString(ChatService.KEY_MESSAGE_TEXT, generateRandom.toString());
+        data.putString(ChatService.KEY_MESSAGE_TEXT, randomID.toString());
         Intent intent = new Intent(getContext(), ChatService.class);
         intent.putExtras(data);
         getActivity().startService(intent);
     }
 
 }
+
+
+
+
+
+
+//UUID generateRandom = UUID.randomUUID();
